@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 @Entity
 public class FormularioCompleto {
-        
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -196,4 +196,5 @@ public class FormularioCompleto {
 
     @Column(name = "data_desligamento", nullable = false)
     private LocalDate dataDesligamento;
+
 }

@@ -6,13 +6,11 @@ import repository.FormularioRepositorio;
 import model.FormularioCompleto;
 import java.util.List;
 
-
 @RequiredArgsConstructor
 @Service
 public class FormularioService {
 
     private final FormularioRepositorio formularioRepositorio;
-
 
     public FormularioCompleto salvarFormulario(FormularioCompleto formulario) {
         return formularioRepositorio.save(formulario);
@@ -21,6 +19,4 @@ public class FormularioService {
     public List<FormularioCompleto> listarFormularios() {
         return formularioRepositorio.findAll();
     }
-
-
 }
