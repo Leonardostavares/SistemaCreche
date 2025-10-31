@@ -1,9 +1,9 @@
-package service;
+package main.service;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import repository.FormularioRepositorio;
-import model.FormularioCompleto;
+import main.repository.FormularioRepositorio;
+import main.model.FormularioCompleto;
 import java.util.List;
 
 @RequiredArgsConstructor

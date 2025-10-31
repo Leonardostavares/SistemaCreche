@@ -1,4 +1,4 @@
-package enums;
+package main.enums;
 
 public enum EducacaoEspecial {
     ALTAS_HABILIDADES_SUPERDOTACAO,

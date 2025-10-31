@@ -1,4 +1,4 @@
-package enums;
+package main.enums;
 
 public enum Auxilio {
     AUXILIO_BRASIL,
