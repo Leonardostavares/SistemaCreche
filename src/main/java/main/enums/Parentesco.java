@@ -1,14 +1,14 @@
 package main.enums;
 
 public enum Parentesco {
-    MÃE,
+    MAE,
     PAI,
-    AVÓ,
-    AVÔ,
+    AVO,
+    AVOH,
     TIA,
     TIO,
-    IRMÃ,
-    IRMÃO,
+    IRMA,
+    IRMAO,
     OUTRO
     
 }

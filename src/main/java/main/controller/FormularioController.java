@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import main.service.FormularioService;
 import main.model.FormularioCompleto;
@@ -19,7 +20,7 @@ public class FormularioController {
     private final FormularioService formularioService;
 
     @PostMapping("/formulario")
-    public FormularioCompleto enviarFormulario(@RequestBody FormularioCompleto formulario) {
+    public FormularioCompleto enviarFormulario(@Valid           @RequestBody FormularioCompleto formulario) {
         return formularioService.salvarFormulario(formulario);
     }
 

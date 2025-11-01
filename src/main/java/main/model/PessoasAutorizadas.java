@@ -8,7 +8,9 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.persistence.*;
 
 import java.util.Set;
+
 @Entity
+@Table(name = "pessoas_autorizadas")
 public class PessoasAutorizadas {
     
     @Id
