@@ -92,7 +92,7 @@ public class FormularioCompleto {
     private String nis;
     
     @Valid
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
         name = "formulario_responsavel",  
         joinColumns = @JoinColumn(name = "formulario_id"),
@@ -173,7 +173,7 @@ public class FormularioCompleto {
     private BigDecimal rendaPerCapita;
 
     @Valid
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
         name = "formulario_composicao_familiar", 
         joinColumns = @JoinColumn(name = "formulario_id"),
@@ -188,7 +188,7 @@ public class FormularioCompleto {
     private int anoLetivo;
 
     @Valid
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
         name = "formulario_pessoas_autorizadas", 
         joinColumns = @JoinColumn(name = "formulario_id"),
