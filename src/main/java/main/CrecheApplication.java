@@ -2,7 +2,6 @@ package main;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 import main.frontend.CrecheFXApplication;
 import javafx.application.Application;
 
@@ -13,7 +12,7 @@ public class CrecheApplication {
         // Iniciar Spring Boot primeiro
         Thread springThread = new Thread(() -> {
             try {
-                ConfigurableApplicationContext context = SpringApplication.run(CrecheApplication.class, args);
+                SpringApplication.run(CrecheApplication.class, args);
                 System.out.println("Spring Boot iniciado com sucesso!");
             } catch (Exception e) {
                 System.err.println("Erro ao iniciar Spring Boot: " + e.getMessage());
