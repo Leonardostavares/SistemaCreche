@@ -1,11 +1,10 @@
 package main.model;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class ComposicaoFamiliar {
 
@@ -13,38 +12,36 @@ public class ComposicaoFamiliar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Nome completo é obrigatório")
     @Size(max = 80, message = "Nome completo deve ter no máximo 80 caracteres")
     @Pattern(regexp = "^[\\p{L}]+(?:\\s[\\p{L}]+)*$", message = "Use apenas letras e espaços")
-    @Column(nullable = false, length = 80)
+    @Column(length = 80)
     private String nomeCompleto;
 
     @Min(value = 0, message = "Idade não pode ser negativa")
-    @Column(nullable = false)
+    @Column
     private int idade;
 
-    @NotBlank(message = "Grau de parentesco é obrigatório")
     @Size(max = 40, message = "Grau de parentesco deve ter no máximo 40 caracteres")
     @Pattern(regexp = "^[\\p{L}]+(?:\\s[\\p{L}]+)*$", message = "Use apenas letras e espaços")
-    @Column(nullable = false, length = 40)
+    @Column(length = 40)
     private String grauParentesco;
 
-    @NotBlank(message = "Situação escolar é obrigatória")
     @Size(max = 40, message = "Situação escolar deve ter no máximo 40 caracteres")
-    @Column(nullable = false, length = 40)
+    @Column(length = 40)
     private String situacaoEscolar;
 
-    @NotBlank(message = "Situação de emprego é obrigatória")
     @Size(max = 40, message = "Situação de emprego deve ter no máximo 40 caracteres")
-    @Column(nullable = false, length = 40)
+    @Column(length = 40)
     private String situacaoEmprego;
     
     @PositiveOrZero(message = "Salário deve ser zero ou positivo")
-    @Column(nullable = false)
+    @Column
     private double salario;
 
-    @ManyToMany(mappedBy = "composicaoFamiliar")
-    private Set<FormularioCompleto> formularioCompleto;
+    @ManyToOne
+    @JoinColumn(name = "formulario_id")
+    @JsonIgnore
+    private FormularioCompleto formularioCompleto;
 
     public Long getId() {
         return id;
@@ -74,7 +71,7 @@ public class ComposicaoFamiliar {
         return salario;
     }
 
-    public Set<FormularioCompleto> getFormularioCompleto() {
+    public FormularioCompleto getFormularioCompleto() {
         return formularioCompleto;
     }
 
@@ -106,7 +103,7 @@ public class ComposicaoFamiliar {
         this.salario = salario;
     }
 
-    public void setFormularioCompleto(Set<FormularioCompleto> formularioCompleto) {
+    public void setFormularioCompleto(FormularioCompleto formularioCompleto) {
         this.formularioCompleto = formularioCompleto;
     }
 

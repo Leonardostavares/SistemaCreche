@@ -23,6 +23,14 @@ public interface FormularioRepositorio extends JpaRepository<FormularioCompleto,
            "LEFT JOIN FETCH f.composicaoFamiliar " +
            "LEFT JOIN FETCH f.pessoasAutorizadas")
     List<FormularioCompleto> findAllComTodasInformacoes();
+    
+    @Query("SELECT DISTINCT f FROM FormularioCompleto f " +
+           "LEFT JOIN FETCH f.responsavel r " +
+           "LEFT JOIN FETCH r.endereco " +
+           "LEFT JOIN FETCH f.composicaoFamiliar " +
+           "LEFT JOIN FETCH f.pessoasAutorizadas " +
+           "WHERE f.status = :status")
+    List<FormularioCompleto> findByStatus(@Param("status") main.enums.Status status);
 }
 
 

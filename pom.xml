@@ -25,18 +25,12 @@
 
     <!-- Dependências do Projeto -->
     <dependencies>
-        <!-- Dependência para usar o Swagger (springdoc-openapi) -->
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.2.0</version>
-        </dependency>
-
         <!-- Spring Data JPA para persistência no banco de dados -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        
         <!-- Dependência para usar o Swagger (springdoc-openapi) - versão atualizada -->
         <dependency>
             <groupId>org.springdoc</groupId>
@@ -51,12 +45,6 @@
             <version>3.1.0</version>
         </dependency>
 
-        <!-- Spring Security para autenticação e autorização -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
-
         <!-- Spring Boot Validation para validação de dados -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -67,6 +55,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        
+        <!-- Spring Boot Actuator para health checks -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
         <!-- DevTools (para reinicialização rápida e facilita o desenvolvimento) -->
@@ -113,6 +107,30 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- JavaFX Dependencies -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>21.0.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>21.0.1</version>
+        </dependency>
+
+        <!-- HTTP Client para consumir APIs REST -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
     </dependencies>
 
     <!-- Configuração do Build -->
@@ -139,6 +157,16 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <mainClass>main.CrecheApplication</mainClass> <!-- Substitua pelo seu pacote e classe principal -->
+                </configuration>
+            </plugin>
+
+            <!-- JavaFX Maven Plugin -->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.8</version>
+                <configuration>
+                    <mainClass>main.frontend.CrecheFXApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>

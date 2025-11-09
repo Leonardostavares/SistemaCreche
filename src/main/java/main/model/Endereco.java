@@ -18,9 +18,8 @@ public class Endereco {
     @Column(nullable = false, length = 120)
     private String endereco;
     
-    @NotBlank(message = "Ponto de referência é obrigatório")
     @Size(max = 120, message = "Ponto de referência deve ter no máximo 120 caracteres")
-    @Column(nullable = false, length = 120)
+    @Column(length = 120)
     private String pontoReferencia;
     
     @NotBlank(message = "Bairro é obrigatório")
@@ -28,9 +27,8 @@ public class Endereco {
     @Column(nullable = false, length = 60)
     private String bairro;
     
-    @NotBlank(message = "Número é obrigatório")
     @Size(max = 10, message = "Número deve ter no máximo 10 caracteres")
-    @Column(nullable = false, length = 10)
+    @Column(length = 10)
     private String numero;
     
     @NotBlank(message = "Município é obrigatório")
@@ -38,9 +36,8 @@ public class Endereco {
     @Column(nullable = false, length = 60)   
     private String municipio;
     
-    @NotBlank(message = "CEP é obrigatório")
     @Pattern(regexp = "\\d{8}", message = "CEP deve conter 8 dígitos")
-    @Column(nullable = false, length = 8)
+    @Column(length = 8)
     private String cep;
     
     @NotBlank(message = "UF é obrigatória")
@@ -48,9 +45,8 @@ public class Endereco {
     @Column(nullable = false, length = 2)
     private String UF = "MA";
 
-    @NotBlank(message = "Telefone residencial é obrigatório")
     @Pattern(regexp = "\\d{10,11}", message = "Telefone deve conter DDD + número, apenas dígitos (10 a 11)")
-    @Column(nullable = false, length = 11)
+    @Column(length = 11)
     private String telefoneResidencial;
 
     public Long getId() {

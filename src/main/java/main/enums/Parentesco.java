@@ -9,6 +9,5 @@ public enum Parentesco {
     TIO,
     IRMA,
     IRMAO,
-    OUTRO
-    
+    OUTRO    
 }

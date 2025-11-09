@@ -3,6 +3,9 @@ import main.enums.*;
 
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.*;
 import java.time.LocalDate;
@@ -15,34 +18,42 @@ public class FormularioCompleto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Nome da criança é obrigatório")
+    @Size(max = 80, message = "Nome deve ter no máximo 80 caracteres")
     @Column(name = "nome_crianca", nullable = false)
     private String nomeCrianca;
 
+    @NotNull(message = "Data de nascimento é obrigatória")
     @Column(name = "data_nascimento", nullable = false)
     private LocalDate dataNascimento;
 
-    @Column(name = "rg", nullable = false)
+    @Column(name = "rg", nullable = true)
     private String rg;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private Sexo sexo;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private Raca raca;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private SimNao gemeo;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private SimNao possuiIrmaoNaCreche;
     
-    @Column(name = "cadastro_nacional_sus", nullable = false)
+    @Column(name = "cadastro_nacional_sus", nullable = true)
     private String cadastroNacionalSus;
 
-    @Column(name = "unidade_saude", nullable = false)
+    @Column(name = "unidade_saude", nullable = true)
     private String unidadeSaude;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private SimNao problemasSaude;
 
     // ElementCollections
@@ -53,7 +64,7 @@ public class FormularioCompleto {
     )
     @Enumerated(EnumType.STRING)
     @Column(name = "restricao")
-    private Set<RestricaoAlimentar> restricaoAlimentar;
+    private Set<RestricaoAlimentar> restricaoAlimentar = new HashSet<>();
 
     @ElementCollection
     @CollectionTable(
@@ -62,9 +73,10 @@ public class FormularioCompleto {
     )
     @Enumerated(EnumType.STRING)
     @Column(name = "alergia")
-    private Set<Alergias> alergia;
+    private Set<Alergias> alergia = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private Mobilidade mobilidade;
 
     @ElementCollection
@@ -74,9 +86,10 @@ public class FormularioCompleto {
     )
     @Enumerated(EnumType.STRING)
     @Column(name = "educacao_especial")
-    private Set<EducacaoEspecial> educacaoEspecial;
+    private Set<EducacaoEspecial> educacaoEspecial = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private SimNao recebeBeneficioSocial;
 
     @ElementCollection
@@ -86,45 +99,47 @@ public class FormularioCompleto {
     )
     @Enumerated(EnumType.STRING)
     @Column(name = "auxilio")
-    private Set<Auxilio> auxilios;
+    private Set<Auxilio> auxilios = new HashSet<>();
 
-    @Column(name = "nis", nullable = false)
+    @Column(name = "nis", nullable = true)
     private String nis;
     
     @Valid
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
         name = "formulario_responsavel",  
         joinColumns = @JoinColumn(name = "formulario_id"),
         inverseJoinColumns = @JoinColumn(name = "responsavel_id")
     )
-    private Set<Responsavel> responsavel;
+    private Set<Responsavel> responsavel = new HashSet<>();
 
-    @Column(name = "municipio_nascimento", nullable = false)
+    @Column(name = "municipio_nascimento", nullable = true)
     private String municipioNascimento;  
 
-    @Column(name = "cartorio_registro", nullable = false)
+    @Column(name = "cartorio_registro", nullable = true)
     private String cartorioRegistro;
 
-    @Column(name = "municipio_registro", nullable = false)
+    @Column(name = "municipio_registro", nullable = true)
     private String municipioRegistro;
 
+    @NotBlank(message = "CPF da criança é obrigatório")
     @Column(name = "cpf", nullable = false)
     private String cpf;
 
-    @Column(name = "data_emissao_rg", nullable = false)
+    @Column(name = "data_emissao_rg", nullable = true)
     private LocalDate dataEmissaoRg;
 
-    @Column(name = "orgao_emissor_rg", nullable = false)
+    @Column(name = "orgao_emissor_rg", nullable = true)
     private String orgaoEmissorRg;
 
-    @Column(name = "valor_aluguel", nullable = false)
+    @Column(name = "valor_aluguel", nullable = true)
     private BigDecimal valorAluguel; 
 
-    @Column(name = "numero_comodos", nullable = false)
+    @Column(name = "numero_comodos", nullable = true)
     private int numeroComodos;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private SituacaoCasa situacaoCasa;
 
     @ElementCollection  
@@ -146,15 +161,19 @@ public class FormularioCompleto {
     private Set<TipoMoradia> tipoMoradia;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private SimNao temFossa;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private SimNao temCifon;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private SimNao temEnergiaEletrica;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private SimNao temAguaEncanada;
 
     @ElementCollection  
@@ -164,45 +183,38 @@ public class FormularioCompleto {
     )
     @Enumerated(EnumType.STRING)
     @Column(name = "moveis_domicilio")
-    private Set<Moveis> noSeuDomicilioTem;
+    private Set<Moveis> noSeuDomicilioTem = new HashSet<>();
 
-    @Column(name = "renda_familiar_mensal", nullable = false)
+    @Column(name = "renda_familiar_mensal", nullable = true)
     private BigDecimal rendaFamiliarMensal; 
 
-    @Column(name = "renda_per_capita", nullable = false)
+    @Column(name = "renda_per_capita", nullable = true)
     private BigDecimal rendaPerCapita;
 
     @Valid
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-        name = "formulario_composicao_familiar", 
-        joinColumns = @JoinColumn(name = "formulario_id"),
-        inverseJoinColumns = @JoinColumn(name = "composicao_familiar_id")
-    )
-    private Set<ComposicaoFamiliar> composicaoFamiliar;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "formulario_id")
+    private Set<ComposicaoFamiliar> composicaoFamiliar = new HashSet<>();
 
-    @Column(name = "serie_que_ira_cursar", nullable = false)
+    @Column(name = "serie_que_ira_cursar", nullable = true)
     private int serieQueIraCursar;
 
-    @Column(name = "ano_letivo", nullable = false)
+    @Column(name = "ano_letivo", nullable = true)
     private int anoLetivo;
 
     @Valid
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-        name = "formulario_pessoas_autorizadas", 
-        joinColumns = @JoinColumn(name = "formulario_id"),
-        inverseJoinColumns = @JoinColumn(name = "pessoas_autorizadas_id")
-    )
-    private Set<PessoasAutorizadas> pessoasAutorizadas;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "formulario_id")
+    private Set<PessoasAutorizadas> pessoasAutorizadas = new HashSet<>();
 
-    @Column(name = "data_matricula", nullable = false)
+    @Column(name = "data_matricula", nullable = true)
     private LocalDate dataMatricula;
 
-    @Column(name = "data_desligamento", nullable = false)
+    @Column(name = "data_desligamento", nullable = true)
     private LocalDate dataDesligamento;
     
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true, length = 20)
     private Status status;
 
     public Long getId() {

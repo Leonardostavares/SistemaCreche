@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.frontend.controller.MainController">
+   <children>
+      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="title" text="Sistema de Creche - Gestão de Matrículas">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="20.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
+      </Label>
+
+      <!-- TabPane Principal -->
+      <TabPane fx:id="tabPane" VBox.vgrow="ALWAYS">
+         <tabs>
+            <!-- Aba Principal - Busca e Novo Cadastro -->
+            <Tab fx:id="tabPrincipal" closable="false" text="📋 Principal">
+               <content>
+      
+      <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+         <content>
+            <VBox spacing="20.0">
+               <padding>
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+               </padding>
+               <children>
+                  
+                  <!-- Seção de Busca -->
+                  <TitledPane collapsible="false" text="Buscar Formulário">
+                     <content>
+                        <VBox spacing="10.0">
+                           <children>
+                              <!-- Busca por CPF -->
+                              <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                 <children>
+                                    <Label text="CPF do Responsável:" />
+                                    <TextField fx:id="txtCpfBusca" prefWidth="200.0" promptText="Digite o CPF para buscar" />
+                                    <Button fx:id="btnBuscar" styleClass="search-button" text="🔍 Buscar" />
+                                    <Button fx:id="btnEditar" styleClass="edit-button" text="✏️ Editar" />
+                                 </children>
+                              </HBox>
+                              
+                              <!-- Busca por Status -->
+                              <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                 <children>
+                                    <Label text="Buscar por Status:" />
+                                    <ComboBox fx:id="cbStatusBusca" prefWidth="150.0" promptText="Selecione o status" />
+                                    <Button fx:id="btnBuscarPorStatus" styleClass="search-button" text="📋 Listar" />
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                     </content>
+                  </TitledPane>
+                  
+                  <!-- Formulário de Cadastro -->
+                  <TitledPane collapsible="false" text="Cadastro de Nova Matrícula">
+                     <content>
+                        <VBox spacing="15.0">
+                           <padding>
+                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                           </padding>
+                           <children>
+                              
+                              <!-- Dados da Criança -->
+                              <Label styleClass="section-title" text="Dados da Criança">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              
+                              <GridPane hgap="10.0" vgap="10.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                                 </columnConstraints>
+                                 <children>
+                                    <Label text="*Nome:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                    <TextField fx:id="txtNomeCrianca" prefWidth="200.0" promptText="Nome completo da criança" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                    
+                                    <Label text="*Data de Nascimento:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                                    <DatePicker fx:id="dpDataNascimento" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                                    
+                                    <Label text="RG:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                    <TextField fx:id="txtRgCrianca" prefWidth="200.0" promptText="RG da criança (opcional)" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    
+                                    <Label text="*CPF:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    <TextField fx:id="txtCpfCrianca" prefWidth="200.0" promptText="CPF da criança (obrigatório)" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                    
+                                    <Label text="Sexo:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                    <ComboBox fx:id="cbSexo" prefWidth="200.0" promptText="Selecione o sexo" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    
+                                    <Label text="Raça:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                    <ComboBox fx:id="cbRaca" prefWidth="200.0" promptText="Selecione a raça" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                    
+                                    <Label text="É gêmeo:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                    <ComboBox fx:id="cbGemeo" prefWidth="200.0" promptText="É gêmeo?" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    
+                                    <Label text="Tem irmão na creche:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                    <ComboBox fx:id="cbPossuiIrmaoNaCreche" prefWidth="200.0" promptText="Possui irmão?" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                    
+                                    <Label text="Cadastro Nacional SUS:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                                    <TextField fx:id="txtCadastroNacionalSus" prefWidth="200.0" promptText="Número do SUS" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    
+                                    <Label text="Unidade de Saúde:" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                    <TextField fx:id="txtUnidadeSaude" prefWidth="200.0" promptText="Nome da unidade" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                    
+                                    <Label text="Problemas de saúde:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                                    <ComboBox fx:id="cbProblemasSaude" prefWidth="200.0" promptText="Possui problemas?" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    
+                                    <Label text="Município de Nascimento:" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                                    <TextField fx:id="txtMunicipioNascimento" prefWidth="200.0" promptText="Cidade de nascimento" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                    
+                                    <Label text="Cartório de Registro:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                                    <TextField fx:id="txtCartorioRegistro" prefWidth="200.0" promptText="Nome do cartório" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    
+                                    <Label text="Município de Registro:" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                                    <TextField fx:id="txtMunicipioRegistro" prefWidth="200.0" promptText="Cidade do registro" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                                    
+                                    <Label text="Data de Emissão RG:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                                    <DatePicker fx:id="dpDataEmissaoRg" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                    
+                                    <Label text="Órgão Emissor RG:" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+                                    <TextField fx:id="txtOrgaoEmissorRg" prefWidth="200.0" promptText="Ex: SSP-MA" GridPane.columnIndex="3" GridPane.rowIndex="7" />
+                                 </children>
+                              </GridPane>
+                              
+                              <!-- Educação Especial - Visível apenas se tiver problemas de saúde -->
+                              <VBox fx:id="vboxEducacaoEspecial" spacing="10.0" visible="false" managed="false">
+                                 <children>
+                                    <Label text="Educação Especial:" style="-fx-font-weight: bold;" />
+                                    <FlowPane hgap="15.0" vgap="5.0">
+                                       <children>
+                                          <CheckBox fx:id="chkAltasHabilidades" text="Altas Habilidades/Superdotação" />
+                                          <CheckBox fx:id="chkCegueira" text="Cegueira" />
+                                          <CheckBox fx:id="chkDeficienciaAuditivaLeve" text="Deficiência Auditiva Leve/Moderada" />
+                                          <CheckBox fx:id="chkDeficienciaAuditivaSevera" text="Deficiência Auditiva Severa/Profunda" />
+                                          <CheckBox fx:id="chkDeficienciaAuditivaProcessamento" text="Deficiência Processamento Central" />
+                                          <CheckBox fx:id="chkDeficienciaVisualBaixa" text="Deficiência Visual/Baixa Visão" />
+                                          <CheckBox fx:id="chkDeficienciaFisicaCadeirante" text="Deficiência Física - Cadeirante" />
+                                          <CheckBox fx:id="chkDeficienciaFisicaParalisia" text="Deficiência Física - Paralisia Cerebral" />
+                                          <CheckBox fx:id="chkDeficienciaFisicaParaplegia" text="Deficiência Física - Paraplegia/Monoplegia" />
+                                          <CheckBox fx:id="chkDeficienciaFisicaOutros" text="Deficiência Física - Outros" />
+                                          <CheckBox fx:id="chkDisfemiaGagueira" text="Disfemia/Gagueira" />
+                                          <CheckBox fx:id="chkDeficienciaIntelectual" text="Deficiência Intelectual" />
+                                          <CheckBox fx:id="chkSensorialAltaSensibilidade" text="Sensorial - Alta Sensibilidade" />
+                                          <CheckBox fx:id="chkSensorialBaixaSensibilidade" text="Sensorial - Baixa Sensibilidade" />
+                                          <CheckBox fx:id="chkDeficienciaMental" text="Deficiência Mental" />
+                                          <CheckBox fx:id="chkEspectroAutistaNivel1" text="Espectro Autista - Nível I" />
+                                          <CheckBox fx:id="chkEspectroAutistaNivel2" text="Espectro Autista - Nível II" />
+                                          <CheckBox fx:id="chkEspectroAutistaNivel3" text="Espectro Autista - Nível III" />
+                                          <CheckBox fx:id="chkEstrabismo" text="Estrabismo" />
+                                          <CheckBox fx:id="chkSurdez" text="Surdez" />
+                                          <CheckBox fx:id="chkSindromeDown" text="Síndrome de Down" />
+                                          <CheckBox fx:id="chkTEA" text="TEA" />
+                                          <CheckBox fx:id="chkTDAH" text="TDAH" />
+                                          <CheckBox fx:id="chkTOD" text="TOD" />
+                                       </children>
+                                    </FlowPane>
+                                 </children>
+                              </VBox>
+                              
+                              <Separator />
+                              
+                              <!-- Dados do Responsável -->
+                              <Label styleClass="section-title" text="Dados do Responsável">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              
+                              <GridPane hgap="10.0" vgap="10.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                                 </columnConstraints>
+                                 <children>
+                                    <Label text="*Nome:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                    <TextField fx:id="txtNomeResponsavel" prefWidth="200.0" promptText="Nome completo do responsável" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                    
+                                    <Label text="*CPF:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                                    <TextField fx:id="txtCpfResponsavel" prefWidth="200.0" promptText="CPF do responsável" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                                    
+                                    <Label text="*RG:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                    <TextField fx:id="txtRgResponsavel" prefWidth="200.0" promptText="RG do responsável" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    
+                                    <Label text="*Telefone:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    <TextField fx:id="txtTelefone" prefWidth="200.0" promptText="Telefone com DDD" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                    
+                                    <Label text="Parentesco:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                    <ComboBox fx:id="cbParentesco" prefWidth="200.0" promptText="Grau de parentesco" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    
+                                    <Label text="WhatsApp:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                    <TextField fx:id="txtWhatsapp" prefWidth="200.0" promptText="WhatsApp (opcional)" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                    
+                                    <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                    <TextField fx:id="txtEmail" prefWidth="200.0" promptText="Email (opcional)" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    
+                                    <Label text="Data de Nascimento:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                    <DatePicker fx:id="dpDataNascimentoResponsavel" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                    
+                                    <Label text="Município de Nascimento:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                                    <TextField fx:id="txtMunicipioNascimentoResponsavel" prefWidth="200.0" promptText="Cidade de nascimento" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    
+                                    <Label text="Escolaridade:" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                                    <TextField fx:id="txtEscolaridade" prefWidth="200.0" promptText="Ex: Ensino Médio" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                    
+                                    <Label text="Profissão:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                                    <TextField fx:id="txtProfissao" prefWidth="200.0" promptText="Profissão atual" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    
+                                    <Label text="Renda Familiar:" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                                    <TextField fx:id="txtRendaFamiliar" prefWidth="200.0" promptText="Valor em R$" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                 </children>
+                              </GridPane>
+                              
+                              <Separator />
+                              
+                              <!-- Endereço -->
+                              <Label styleClass="section-title" text="Endereço">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              
+                              <GridPane hgap="10.0" vgap="10.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="300.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" />
+                                 </columnConstraints>
+                                 <children>
+                                    <Label text="*Endereço:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                    <TextField fx:id="txtEndereco" prefWidth="300.0" promptText="Rua, Avenida, etc." GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                    
+                                    <Label text="Número:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                                    <TextField fx:id="txtNumero" prefWidth="150.0" promptText="Número (opcional)" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                                    
+                                    <Label text="*Bairro:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                    <TextField fx:id="txtBairro" prefWidth="300.0" promptText="Nome do bairro" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    
+                                    <Label text="CEP:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    <TextField fx:id="txtCep" prefWidth="150.0" promptText="00000000" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                    
+                                    <Label text="*Município:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                    <TextField fx:id="txtMunicipio" prefWidth="300.0" promptText="Nome do município" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    
+                                    <Label text="UF:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                    <TextField fx:id="txtUf" prefWidth="150.0" text="MA" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                    
+                                    <Label text="Complemento:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                    <TextField fx:id="txtComplemento" prefWidth="300.0" promptText="Apartamento, casa, etc." GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    
+                                    <Label text="Tipo de Moradia:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                    <ComboBox fx:id="cbTipoMoradia" prefWidth="150.0" promptText="Tipo de casa" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                                    
+                                    <Label text="Tipo de Piso:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                                    <ComboBox fx:id="cbTipoPiso" prefWidth="300.0" promptText="Material do piso" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    
+                                    <Label text="Situação da Casa:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                                    <ComboBox fx:id="cbSituacaoCasa" prefWidth="300.0" promptText="Ex: Própria, Alugada" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    
+                                    <Label text="Valor do Aluguel:" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                                    <TextField fx:id="txtValorAluguel" prefWidth="150.0" promptText="Valor em R$" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                    
+                                    <Label text="Número de Cômodos:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                                    <TextField fx:id="txtNumeroComodos" prefWidth="300.0" promptText="Total de cômodos" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                 </children>
+                              </GridPane>
+                              
+                              <!-- Móveis do Domicílio -->
+                              <Label text="Móveis do Domicílio:" style="-fx-font-weight: bold;" />
+                              <FlowPane hgap="15.0" vgap="5.0">
+                                 <children>
+                                    <CheckBox fx:id="chkMovelTV" text="TV" />
+                                    <CheckBox fx:id="chkMovelDVD" text="DVD" />
+                                    <CheckBox fx:id="chkMovelRadio" text="Rádio" />
+                                    <CheckBox fx:id="chkMovelComputador" text="Computador" />
+                                    <CheckBox fx:id="chkMovelNotebook" text="Notebook" />
+                                    <CheckBox fx:id="chkMovelTelefoneFixo" text="Telefone Fixo" />
+                                    <CheckBox fx:id="chkMovelTelefoneCelular" text="Telefone Celular" />
+                                    <CheckBox fx:id="chkMovelTablet" text="Tablet" />
+                                    <CheckBox fx:id="chkMovelInternet" text="Internet" />
+                                    <CheckBox fx:id="chkMovelTVAssinatura" text="TV por Assinatura" />
+                                    <CheckBox fx:id="chkMovelFogao" text="Fogão" />
+                                    <CheckBox fx:id="chkMovelGeladeira" text="Geladeira" />
+                                    <CheckBox fx:id="chkMovelFreezer" text="Freezer" />
+                                    <CheckBox fx:id="chkMovelMicroOndas" text="Microondas" />
+                                    <CheckBox fx:id="chkMovelMaquinaLavar" text="Máquina de Lavar" />
+                                    <CheckBox fx:id="chkMovelArCondicionado" text="Ar Condicionado" />
+                                    <CheckBox fx:id="chkMovelBicicleta" text="Bicicleta" />
+                                    <CheckBox fx:id="chkMovelMoto" text="Moto" />
+                                    <CheckBox fx:id="chkMovelAutomovel" text="Automóvel" />
+                                 </children>
+                              </FlowPane>
+                              
+                              <Separator />
+                              
+                              <!-- Informações de Saúde e Sociais -->
+                              <Label styleClass="section-title" text="Informações de Saúde e Sociais">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              
+                              <!-- Restrições Alimentares -->
+                              <Label text="Restrições Alimentares:" style="-fx-font-weight: bold;" />
+                              <FlowPane hgap="15.0" vgap="5.0">
+                                 <children>
+                                    <CheckBox fx:id="chkRestricaoAlimentarLactose" text="Lactose" />
+                                    <CheckBox fx:id="chkRestricaoAlimentarGluten" text="Glúten" />
+                                    <CheckBox fx:id="chkRestricaoAlimentarAcucar" text="Açúcar" />
+                                    <CheckBox fx:id="chkRestricaoAlimentarSal" text="Sal" />
+                                    <CheckBox fx:id="chkRestricaoAlimentarCorante" text="Corante" />
+                                 </children>
+                              </FlowPane>
+                              
+                              <!-- Alergias -->
+                              <Label text="Alergias:" style="-fx-font-weight: bold;" />
+                              <FlowPane hgap="15.0" vgap="5.0">
+                                 <children>
+                                    <CheckBox fx:id="chkAlergiaPoeira" text="Ácaros/Poeira" />
+                                    <CheckBox fx:id="chkAlergiaMedicamentos" text="Medicamentos" />
+                                    <CheckBox fx:id="chkAlergiaAlimentos" text="Alimentos" />
+                                    <CheckBox fx:id="chkAlergiaAnimais" text="Pelos de Animais" />
+                                    <CheckBox fx:id="chkAlergiaCosmeticos" text="Pólen" />
+                                 </children>
+                              </FlowPane>
+                              
+                              <!-- Mobilidade -->
+                              <Label text="Mobilidade:" style="-fx-font-weight: bold;" />
+                              <FlowPane hgap="15.0" vgap="5.0">
+                                 <children>
+                                    <CheckBox fx:id="chkMobilidadeCadeirante" text="Permanente" />
+                                    <CheckBox fx:id="chkMobilidadeMuletas" text="Temporária" />
+                                    <CheckBox fx:id="chkMobilidadeProtese" text="Prótese" />
+                                    <CheckBox fx:id="chkMobilidadeBengala" text="Bengala" />
+                                 </children>
+                              </FlowPane>
+                              
+
+                              
+                              <!-- Benefícios Sociais -->
+                              <GridPane hgap="10.0" vgap="10.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                                 </columnConstraints>
+                                 <children>
+                                    <Label text="Recebe Benefício Social:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                    <ComboBox fx:id="cbRecebeBeneficioSocial" prefWidth="200.0" promptText="Recebe benefício?" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                    
+                                    <Label text="NIS:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                                    <TextField fx:id="txtNis" prefWidth="200.0" promptText="Número do NIS" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                                 </children>
+                              </GridPane>
+                              
+                              <!-- Auxílios - Visível apenas se receber benefício social -->
+                              <VBox fx:id="vboxAuxilios" spacing="10.0" visible="false" managed="false">
+                                 <children>
+                                    <Label text="Auxílios Recebidos:" style="-fx-font-weight: bold;" />
+                                    <FlowPane hgap="15.0" vgap="5.0">
+                                       <children>
+                                          <CheckBox fx:id="chkAuxilioEmergencial" text="Auxílio Emergencial" />
+                                          <CheckBox fx:id="chkAuxilioBrasil" text="Auxílio Brasil" />
+                                          <CheckBox fx:id="chkSeguroDesemprego" text="Seguro Desemprego" />
+                                          <CheckBox fx:id="chkBeneficioAssistencial" text="Benefício Assistencial" />
+                                          <CheckBox fx:id="chkAuxilioMaternidade" text="Auxílio Alimentação" />
+                                          <CheckBox fx:id="chkPensaoMorte" text="Vale Gás" />
+                                          <CheckBox fx:id="chkOutrosAuxilios" text="Auxílio Creche" />
+                                       </children>
+                                    </FlowPane>
+                                 </children>
+                              </VBox>
+                              
+                              <!-- Pessoas Autorizadas a Buscar a Criança -->
+                              <Label styleClass="section-title" text="Pessoas Autorizadas a Buscar a Criança">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              
+                              <GridPane hgap="15.0" vgap="10.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="35.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="35.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="35.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <!-- Pessoa 1 -->
+                                    <Label text="Nome Completo:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                    <TextField fx:id="txtNomePessoa1" promptText="Nome da pessoa autorizada" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                    <ComboBox fx:id="cbParentescoPessoa1" promptText="Parentesco" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                                    
+                                    <!-- Pessoa 2 -->
+                                    <Label text="Nome Completo:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                    <TextField fx:id="txtNomePessoa2" promptText="Nome da pessoa autorizada" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <ComboBox fx:id="cbParentescoPessoa2" promptText="Parentesco" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    
+                                    <!-- Pessoa 3 -->
+                                    <Label text="Nome Completo:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                    <TextField fx:id="txtNomePessoa3" promptText="Nome da pessoa autorizada" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <ComboBox fx:id="cbParentescoPessoa3" promptText="Parentesco" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </GridPane>
+
+                              
+                              <Separator />
+                              
+                              <!-- Status do Formulário -->
+                              <Label styleClass="section-title" text="Status do Formulário">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              
+                              <GridPane hgap="10.0" vgap="10.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="120.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" />
+                                 </columnConstraints>
+                                 <children>
+                                    <Label text="*Status:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                    <ComboBox fx:id="cbStatusFormulario" prefWidth="200.0" promptText="Selecione o status inicial" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" top="10.0" />
+                                 </VBox.margin>
+                              </GridPane>
+                              
+                              <Separator />
+                              
+                              <!-- Botões -->
+                              <HBox alignment="CENTER" spacing="20.0">
+                                 <children>
+                                    <Button fx:id="btnSalvar" prefWidth="150.0" styleClass="save-button" text="Salvar Matrícula">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </Button>
+                                    <Button fx:id="btnLimpar" prefWidth="150.0" styleClass="clear-button" text="Limpar Campos">
+                                       <font>
+                                          <Font name="System Bold" size="14.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              
+                           </children>
+                        </VBox>
+                     </content>
+                  </TitledPane>
+                  
+                  <!-- Lista de Formulários -->
+                  <TitledPane collapsible="false" text="Matrículas Cadastradas">
+                     <content>
+                        <VBox spacing="10.0">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                           <children>
+                              <TableView fx:id="tblFormularios" prefHeight="300.0">
+                                 <columns>
+                                    <TableColumn fx:id="colNomeCrianca" prefWidth="250.0" text="Nome da Criança" />
+                                    <TableColumn fx:id="colDataNascimento" prefWidth="150.0" text="Data de Nascimento" />
+                                    <TableColumn fx:id="colNomeResponsavel" prefWidth="250.0" text="Nome do Responsável" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </VBox>
+                     </content>
+                  </TitledPane>
+                  
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+                  
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+      
+      <!-- Rodapé com informações -->
+      <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="footer" text="* Campos obrigatórios | Sistema de Creche v1.0">
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
+      </Label>
+      
+   </children>
+</VBox>
