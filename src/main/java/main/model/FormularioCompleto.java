@@ -105,7 +105,7 @@ public class FormularioCompleto {
     private String nis;
     
     @Valid
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(
         name = "formulario_responsavel",  
         joinColumns = @JoinColumn(name = "formulario_id"),

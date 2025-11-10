@@ -31,11 +31,12 @@ public class FormularioController {
 
     // ========== BUSCA POR CPF ==========
     @GetMapping("/formulario/buscar/cpf/{cpf}")
-    public ResponseEntity<FormularioCompleto> buscarFormularioPorCpf(@PathVariable String cpf) {
-        Optional<FormularioCompleto> formulario = formularioService.buscarPorCpfComTodasInformacoes(cpf);
-        return formulario
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<List<FormularioCompleto>> buscarFormularioPorCpf(@PathVariable String cpf) {
+        List<FormularioCompleto> formularios = formularioService.buscarPorCpfComTodasInformacoes(cpf);
+        if (formularios.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(formularios);
     }
 
     // ========== BUSCA POR STATUS ==========

@@ -2,10 +2,12 @@ package main;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import main.frontend.CrecheFXApplication;
 import javafx.application.Application;
 
 @SpringBootApplication(scanBasePackages = "main")
+@EnableJpaRepositories(basePackages = "main.repository")
 public class CrecheApplication {
 
     public static void main(String[] args) {

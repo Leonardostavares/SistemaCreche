@@ -766,11 +766,14 @@ public class MainController implements Initializable {
         }
         
         try {
-            FormularioCompleto formulario = apiService.buscarPorCpf(cpf);
-            if (formulario != null) {
-                criarAbaVisualizacao(formulario);
-                txtCpfBusca.clear(); // Limpar campo de busca
-                mostrarAlerta("Sucesso", "Formulário encontrado e aberto para visualização!", Alert.AlertType.INFORMATION);
+            List<FormularioCompleto> formularios = apiService.buscarPorCpf(cpf);
+            if (!formularios.isEmpty()) {
+                FormularioCompleto formulario = selecionarFormulario(formularios);
+                if (formulario != null) {
+                    criarAbaVisualizacao(formulario);
+                    txtCpfBusca.clear(); // Limpar campo de busca
+                    mostrarAlerta("Sucesso", "Formulário encontrado e aberto para visualização!", Alert.AlertType.INFORMATION);
+                }
             } else {
                 mostrarAlerta("Não encontrado", "Nenhum formulário encontrado para o CPF informado", Alert.AlertType.INFORMATION);
             }
@@ -787,16 +790,19 @@ public class MainController implements Initializable {
         }
         
         try {
-            FormularioCompleto formulario = apiService.buscarPorCpf(cpf);
-            if (formulario != null) {
-                criarAbaEdicao(formulario);
-                txtCpfBusca.clear(); // Limpar campo de busca
-                String statusAtual = formulario.getStatus() != null ? formulario.getStatus().toString() : "NÃO DEFINIDO";
-                mostrarAlerta("Sucesso", 
-                    "Formulário encontrado e aberto para edição!\n" +
-                    "Status atual: " + statusAtual + "\n" +
-                    "Você pode alterar o status na seção 'Dados Escolares'", 
-                    Alert.AlertType.INFORMATION);
+            List<FormularioCompleto> formularios = apiService.buscarPorCpf(cpf);
+            if (!formularios.isEmpty()) {
+                FormularioCompleto formulario = selecionarFormulario(formularios);
+                if (formulario != null) {
+                    criarAbaEdicao(formulario);
+                    txtCpfBusca.clear(); // Limpar campo de busca
+                    String statusAtual = formulario.getStatus() != null ? formulario.getStatus().toString() : "NÃO DEFINIDO";
+                    mostrarAlerta("Sucesso", 
+                        "Formulário encontrado e aberto para edição!\n" +
+                        "Status atual: " + statusAtual + "\n" +
+                        "Você pode alterar o status na seção 'Dados Escolares'", 
+                        Alert.AlertType.INFORMATION);
+                }
             } else {
                 mostrarAlerta("Não encontrado", "Nenhum formulário encontrado para o CPF informado", Alert.AlertType.INFORMATION);
             }
@@ -1767,6 +1773,53 @@ public class MainController implements Initializable {
         } catch (Exception e) {
             mostrarAlerta("Erro", "Erro ao carregar lista de formulários: " + e.getMessage(), Alert.AlertType.ERROR);
         }
+    }
+    
+    private FormularioCompleto selecionarFormulario(List<FormularioCompleto> formularios) {
+        if (formularios.size() == 1) {
+            return formularios.get(0);
+        }
+        
+        // Criar um diálogo de seleção quando houver múltiplos formulários
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Múltiplos Formulários Encontrados");
+        alert.setHeaderText("Foram encontrados " + formularios.size() + " formulários para este CPF.");
+        alert.setContentText("Selecione qual formulário deseja abrir:");
+        
+        // Criar botões para cada formulário
+        StringBuilder opcoes = new StringBuilder();
+        for (int i = 0; i < formularios.size(); i++) {
+            FormularioCompleto f = formularios.get(i);
+            opcoes.append((i + 1)).append(". ").append(f.getNomeCrianca());
+            if (f.getDataNascimento() != null) {
+                opcoes.append(" (nascido em ").append(f.getDataNascimento()).append(")");
+            }
+            opcoes.append("\n");
+        }
+        
+        alert.setContentText("Selecione qual formulário deseja abrir:\n\n" + opcoes.toString());
+        
+        // Criar input para seleção
+        javafx.scene.control.TextInputDialog inputDialog = new javafx.scene.control.TextInputDialog("1");
+        inputDialog.setTitle("Selecionar Formulário");
+        inputDialog.setHeaderText("Múltiplos formulários encontrados para este CPF:");
+        inputDialog.setContentText(opcoes.toString() + "\nDigite o número do formulário:");
+        
+        java.util.Optional<String> result = inputDialog.showAndWait();
+        if (result.isPresent()) {
+            try {
+                int escolha = Integer.parseInt(result.get()) - 1;
+                if (escolha >= 0 && escolha < formularios.size()) {
+                    return formularios.get(escolha);
+                } else {
+                    mostrarAlerta("Erro", "Número inválido! Deve ser entre 1 e " + formularios.size(), Alert.AlertType.ERROR);
+                }
+            } catch (NumberFormatException e) {
+                mostrarAlerta("Erro", "Por favor, digite um número válido!", Alert.AlertType.ERROR);
+            }
+        }
+        
+        return null; // Usuário cancelou ou erro na seleção
     }
     
     private void mostrarAlerta(String titulo, String mensagem, Alert.AlertType tipo) {

@@ -3,16 +3,21 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import main.repository.FormularioRepositorio;
+import main.repository.ResponsavelRepositorio;
 import main.model.FormularioCompleto;
+import main.model.Responsavel;
 import main.enums.Status;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.HashSet;
 
 @RequiredArgsConstructor
 @Service
 public class FormularioService {
 
     private final FormularioRepositorio formularioRepositorio;
+    private final ResponsavelRepositorio responsavelRepositorio;
 
     /**
      * CRIAÇÃO: Cria um novo formulário (sem ID)
@@ -25,6 +30,12 @@ public class FormularioService {
         // Se não foi definido status, usar PENDENTE como padrão
         if (formulario.getStatus() == null) {
             formulario.setStatus(Status.PENDENTE);
+        }
+        
+        // PROCESSAR RESPONSÁVEIS: Reutilizar responsáveis existentes baseado no CPF
+        if (formulario.getResponsavel() != null && !formulario.getResponsavel().isEmpty()) {
+            Set<Responsavel> responsaveisProcessados = processarResponsaveis(formulario.getResponsavel());
+            formulario.setResponsavel(responsaveisProcessados);
         }
         
         // Definir referências bidirecionais para evitar problemas de cascade
@@ -40,6 +51,35 @@ public class FormularioService {
     }
 
     /**
+     * PROCESSAMENTO DE RESPONSÁVEIS: Reutiliza responsáveis existentes baseado no CPF
+     */
+    private Set<Responsavel> processarResponsaveis(Set<Responsavel> responsaveisOriginais) {
+        Set<Responsavel> responsaveisProcessados = new HashSet<>();
+        
+        for (Responsavel responsavelOriginal : responsaveisOriginais) {
+            if (responsavelOriginal.getCpf() != null && !responsavelOriginal.getCpf().trim().isEmpty()) {
+                // Buscar responsável existente pelo CPF
+                Optional<Responsavel> responsavelExistente = responsavelRepositorio.findByCpf(responsavelOriginal.getCpf());
+                
+                if (responsavelExistente.isPresent()) {
+                    // REUTILIZAR responsável existente
+                    responsaveisProcessados.add(responsavelExistente.get());
+                } else {
+                    // CRIAR novo responsável (CPF não existe)
+                    responsavelOriginal.setId(null); // Garantir que será criado um novo
+                    responsaveisProcessados.add(responsavelOriginal);
+                }
+            } else {
+                // CPF não informado, criar normalmente
+                responsavelOriginal.setId(null);
+                responsaveisProcessados.add(responsavelOriginal);
+            }
+        }
+        
+        return responsaveisProcessados;
+    }
+
+    /**
      * EDIÇÃO: Edita um formulário existente usando seu ID
      */
     public FormularioCompleto editarFormularioExistente(Long id, FormularioCompleto formularioAtualizado) {
@@ -51,6 +91,12 @@ public class FormularioService {
         
         // Garantir que o ID está correto
         formularioAtualizado.setId(id);
+        
+        // PROCESSAR RESPONSÁVEIS: Reutilizar responsáveis existentes baseado no CPF
+        if (formularioAtualizado.getResponsavel() != null && !formularioAtualizado.getResponsavel().isEmpty()) {
+            Set<Responsavel> responsaveisProcessados = processarResponsaveis(formularioAtualizado.getResponsavel());
+            formularioAtualizado.setResponsavel(responsaveisProcessados);
+        }
         
         // Definir referências bidirecionais corretamente
         if (formularioAtualizado.getComposicaoFamiliar() != null) {
@@ -115,10 +161,11 @@ public class FormularioService {
     }
     
     /**
-     * Busca um formulário completo pelo CPF de QUALQUER responsável
+     * Busca TODOS os formulários pelo CPF de QUALQUER responsável
      * Retorna todas as informações: responsáveis, endereços, composição familiar, pessoas autorizadas
+     * AGORA RETORNA LISTA: Um responsável pode ter múltiplos formulários (vários filhos)
      */
-    public Optional<FormularioCompleto> buscarPorCpfComTodasInformacoes(String cpf) {
+    public List<FormularioCompleto> buscarPorCpfComTodasInformacoes(String cpf) {
         return formularioRepositorio.findByCpfResponsavelComTodasInformacoes(cpf);
     }
     

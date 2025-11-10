@@ -91,7 +91,7 @@ public class ApiService {
         }
     }
     
-    public FormularioCompleto buscarPorCpf(String cpf) throws IOException, InterruptedException {
+    public List<FormularioCompleto> buscarPorCpf(String cpf) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(baseUrl + "/formulario/buscar/cpf/" + cpf))
                 .GET()
@@ -100,9 +100,9 @@ public class ApiService {
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         
         if (response.statusCode() == 200) {
-            return objectMapper.readValue(response.body(), FormularioCompleto.class);
+            return objectMapper.readValue(response.body(), objectMapper.getTypeFactory().constructCollectionType(List.class, FormularioCompleto.class));
         } else if (response.statusCode() == 404) {
-            return null; // Não encontrado
+            return List.of(); // Lista vazia se não encontrado
         } else {
             throw new RuntimeException("Erro ao buscar formulário: " + response.statusCode() + " - " + response.body());
         }
