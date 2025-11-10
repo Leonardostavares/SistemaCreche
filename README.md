@@ -6,7 +6,7 @@ Sistema para gerenciamento de matrículas e dados de crianças em creche públic
 
 - **Backend**: Spring Boot 3.1.5
 - **Frontend**: JavaFX 21
-- **Banco de Dados**: H2 (padrão) / MySQL 8.0 (opcional)
+- **Banco de Dados**: H2 (padrão) / MySQL 8.0 (opcional) //Deixei o banco de dados no h2, para que o professor consiga testar todas as funcoes com facilidado, cadastrar uma crianca, busca-la, editar o formulario, alterar o status da ficha e buscar pelo status do formulario.
 - **Build**: Maven
 - **Java**: 21
 
