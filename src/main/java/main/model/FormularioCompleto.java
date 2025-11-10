@@ -123,7 +123,7 @@ public class FormularioCompleto {
     private String municipioRegistro;
 
     @NotBlank(message = "CPF da criança é obrigatório")
-    @Column(name = "cpf", nullable = false)
+    @Column(name = "cpf", nullable = false, length = 14)
     private String cpf;
 
     @Column(name = "data_emissao_rg", nullable = true)

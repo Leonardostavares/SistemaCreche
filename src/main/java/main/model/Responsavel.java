@@ -26,7 +26,7 @@ public class Responsavel {
 
     @NotBlank(message = "CPF é obrigatório")
     @CPF(message = "CPF inválido")
-    @Column(nullable = false, length = 11, unique = true)
+    @Column(nullable = false, length = 14, unique = true)
     private String cpf;
 
     @NotBlank(message = "RG é obrigatório")

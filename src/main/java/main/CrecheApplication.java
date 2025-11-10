@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import main.frontend.CrecheFXApplication;
 import javafx.application.Application;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "main")
 public class CrecheApplication {
 
     public static void main(String[] args) {

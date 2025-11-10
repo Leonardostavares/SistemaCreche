@@ -36,8 +36,8 @@ public class Endereco {
     @Column(nullable = false, length = 60)   
     private String municipio;
     
-    @Pattern(regexp = "\\d{8}", message = "CEP deve conter 8 dígitos")
-    @Column(length = 8)
+    @Pattern(regexp = "\\d{5}-?\\d{3}", message = "CEP deve conter 8 dígitos (formato: 12345678 ou 12345-678)")
+    @Column(length = 9)
     private String cep;
     
     @NotBlank(message = "UF é obrigatória")
