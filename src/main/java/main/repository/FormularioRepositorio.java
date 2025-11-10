@@ -5,7 +5,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import main.model.FormularioCompleto;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface FormularioRepositorio extends JpaRepository<FormularioCompleto, Long> {
